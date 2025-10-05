@@ -4,7 +4,7 @@
 [![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)](https://spring.io/projects/spring-boot)
 [![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://openjdk.org/)
 
-> 📅 **Last Updated:** 10/5/2025, 5:21:16 PM  
+> 📅 **Last Updated:** 10/5/2025, 5:27:35 PM  
 > 🔄 **Auto-generated** from GraphQL schema  
 > ⚡ **Dynamic** - Updates automatically with schema changes
 
@@ -50,7 +50,7 @@ type Player{
     id: ID!
     name : String
     team: Team
-    city:String
+    city: String
 }
 enum Team{
     CSK
@@ -58,12 +58,12 @@ enum Team{
     RCB
     DC
     GT
-    GST
 }
 
 type Query{
     findAll: [Player]
     findById(id: ID!): Player
+    findByTeam(team: Team!): [Player]
 }
 ```
 
@@ -92,6 +92,12 @@ query GetAllPlayers {
 🔍 **Description:** Execute the findById(id operation.
 
 **Return Type:** `ID!)`
+
+### 🔍 findByTeam(team
+
+🔍 **Description:** Execute the findByTeam(team operation.
+
+**Return Type:** `Team!)`
 
 ## 🏗️ Types
 
@@ -123,7 +129,6 @@ query GetAllPlayers {
 | `RCB` | Royal Challengers Bangalore | Bangalore | 🔴 Red & 🟡 Gold |
 | `DC` | Delhi Capitals | Delhi | 🔵 Blue & 🔴 Red |
 | `GT` | Gujarat Titans | Ahmedabad | 🟢 Green & 🔵 Blue |
-| `GST` | Gujarat Titans | Ahmedabad | 🟢 Green & 🔵 Blue |
 
 ## 💡 Examples
 
