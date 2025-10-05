@@ -4,7 +4,7 @@
 [![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)](https://spring.io/projects/spring-boot)
 [![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://openjdk.org/)
 
-> 📅 **Last Updated:** 10/5/2025, 6:06:48 PM  
+> 📅 **Last Updated:** 10/5/2025, 6:09:59 PM  
 > 🔄 **Auto-generated** from GraphQL schema  
 > ⚡ **Dynamic** - Updates automatically with schema changes
 
@@ -48,9 +48,10 @@ Every GraphQL schema has a root type for both queries and mutations. The query t
 ```graphql
 type Player{
     id: ID!
-    name : String
+    name: String
     team: Team
     city: String
+    position: Position
 }
 enum Team{
     CSK
@@ -60,14 +61,23 @@ enum Team{
     GT
 }
 
+enum Position{
+    BATSMAN
+    BOWLER
+    WICKET_KEEPER
+    ALL_ROUNDER
+    CAPTAIN
+}
+
 type Query{
     findAll: [Player]
     findById(id: ID!): Player
     findByTeam(team: Team!): [Player]
+    findByPosition(position: Position!): [Player]
 }
 
 type Mutation{
-    createPlayer(name: String!, team: Team!, city: String!): Player
+    createPlayer(name: String!, team: Team!, city: String!, position: Position!): Player
 }
 ```
 
@@ -87,6 +97,7 @@ query GetAllPlayers {
     name
     team
     city
+    position
   }
 }
 ```
@@ -103,6 +114,12 @@ query GetAllPlayers {
 
 **Return Type:** `Team!)`
 
+### 🔍 findByPosition(position
+
+🔍 **Description:** Execute the findByPosition(position operation.
+
+**Return Type:** `Position!)`
+
 ## 🏗️ Types
 
 ### 🏏 Player
@@ -117,6 +134,7 @@ query GetAllPlayers {
 | 👤 `name` | `String` | Player's full name | ❌ No |
 | 🏟️ `team` | `Team` | IPL team the player belongs to | ❌ No |
 | 🏙️ `city` | `String` | Player's home city | ❌ No |
+| 📝 `position` | `Position` | position field | ❌ No |
 
 ### 🏏 Mutation
 
@@ -143,6 +161,20 @@ query GetAllPlayers {
 | `RCB` | Royal Challengers Bangalore | Bangalore | 🔴 Red & 🟡 Gold |
 | `DC` | Delhi Capitals | Delhi | 🔵 Blue & 🔴 Red |
 | `GT` | Gujarat Titans | Ahmedabad | 🟢 Green & 🔵 Blue |
+
+### 🏟️ Position
+
+🏏 **Description:** The Position enum values.
+
+#### 🎯 Values for `Position`
+
+| Value | Full Name | City | Colors |
+|-------|-----------|------|--------|
+| `BATSMAN` | BATSMAN team | Unknown | Unknown |
+| `BOWLER` | BOWLER team | Unknown | Unknown |
+| `WICKET_KEEPER` | WICKET_KEEPER team | Unknown | Unknown |
+| `ALL_ROUNDER` | ALL_ROUNDER team | Unknown | Unknown |
+| `CAPTAIN` | CAPTAIN team | Unknown | Unknown |
 
 ## 💡 Examples
 
