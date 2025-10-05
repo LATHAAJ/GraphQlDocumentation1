@@ -79,26 +79,52 @@ function parseGraphQLSchema(schemaContent) {
 function generateMarkdown(schemaData, schemaContent) {
   const { types, enums, queries } = schemaData;
   
-  let markdown = `# GraphQL API Documentation
+  let markdown = `# 🏏 Cricket Players GraphQL API Documentation
 
-> **Auto-generated on:** ${new Date().toLocaleString()}
-> 
-> This documentation is automatically generated from your GraphQL schema. 
-> Any changes to the schema will be reflected here when you run \`node generate-docs.js\`
+[![GraphQL](https://img.shields.io/badge/GraphQL-E10098?style=for-the-badge&logo=graphql&logoColor=white)](https://graphql.org/)
+[![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)](https://spring.io/projects/spring-boot)
+[![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://openjdk.org/)
 
-## In this article
+> 📅 **Last Updated:** ${new Date().toLocaleString()}  
+> 🔄 **Auto-generated** from GraphQL schema  
+> ⚡ **Dynamic** - Updates automatically with schema changes
 
-* About queries
-* Schema overview
-* Types
-* Enums
-* Queries
+## 📋 Table of Contents
 
-## About queries
+- [🚀 Quick Start](#-quick-start)
+- [📖 About GraphQL](#-about-graphql)
+- [🔍 Schema Overview](#-schema-overview)
+- [📊 Queries](#-queries)
+- [🏗️ Types](#️-types)
+- [📝 Enums](#-enums)
+- [💡 Examples](#-examples)
+- [🛠️ Development](#️-development)
+
+## 🚀 Quick Start
+
+Get started with our Cricket Players API in seconds:
+
+\`\`\`bash
+# Start the application
+./gradlew bootRun
+
+# Test the API
+curl -X POST http://localhost:8080/graphql \\
+  -H "Content-Type: application/json" \\
+  -d '{"query": "query { findAll { id name team city } }"}'
+\`\`\`
+
+## 📖 About GraphQL
 
 Every GraphQL schema has a root type for both queries and mutations. The query type defines GraphQL operations that retrieve data from the server.
 
-## Schema Overview
+**Key Benefits:**
+- 🎯 **Precise Data Fetching** - Get exactly what you need
+- 🔄 **Single Endpoint** - One URL for all operations  
+- 📚 **Self-Documenting** - Schema serves as documentation
+- 🚀 **Type Safety** - Strong typing prevents errors
+
+## 🔍 Schema Overview
 
 \`\`\`graphql
 ${schemaContent}
@@ -108,27 +134,46 @@ ${schemaContent}
 
   // Generate Queries section first (like GitHub docs)
   if (queries.length > 0) {
-    markdown += `## Queries\n\n`;
+    markdown += `## 📊 Queries\n\n`;
     queries.forEach(query => {
-      markdown += `### ${query.name}\n\n`;
+      markdown += `### 🔍 ${query.name}\n\n`;
       
       // Add description based on query name
       let description = '';
+      let icon = '🔍';
       if (query.name === 'findAll') {
-        description = 'Retrieve all players from all teams.';
+        description = 'Retrieve all cricket players from all IPL teams.';
+        icon = '📋';
+      } else if (query.name === 'findById') {
+        description = 'Find a specific cricket player by their unique ID.';
+        icon = '🎯';
       } else {
         description = `Execute the ${query.name} operation.`;
       }
       
-      markdown += `${description}\n\n`;
-      markdown += `**Type:** ${query.type}\n\n`;
+      markdown += `${icon} **Description:** ${description}\n\n`;
+      markdown += `**Return Type:** \`${query.type}\`\n\n`;
       
       // Generate example query
       if (query.name === 'findAll' && types.find(t => t.name === 'Player')) {
         markdown += `**Example Query:**\n`;
         markdown += `\`\`\`graphql\n`;
-        markdown += `query {\n`;
+        markdown += `query GetAllPlayers {\n`;
         markdown += `  ${query.name} {\n`;
+        const playerType = types.find(t => t.name === 'Player');
+        if (playerType) {
+          playerType.fields.forEach(field => {
+            markdown += `    ${field.name}\n`;
+          });
+        }
+        markdown += `  }\n`;
+        markdown += `}\n`;
+        markdown += `\`\`\`\n\n`;
+      } else if (query.name === 'findById' && types.find(t => t.name === 'Player')) {
+        markdown += `**Example Query:**\n`;
+        markdown += `\`\`\`graphql\n`;
+        markdown += `query GetPlayerById {\n`;
+        markdown += `  ${query.name}(id: 1) {\n`;
         const playerType = types.find(t => t.name === 'Player');
         if (playerType) {
           playerType.fields.forEach(field => {
@@ -144,42 +189,54 @@ ${schemaContent}
 
   // Generate Types section
   if (types.length > 0) {
-    markdown += `## Types\n\n`;
+    markdown += `## 🏗️ Types\n\n`;
     types.forEach(type => {
       if (type.name === 'Query') return; // Skip Query type as it's handled above
       
-      markdown += `### ${type.name}\n\n`;
+      markdown += `### 🏏 ${type.name}\n\n`;
       
       // Add description based on type name
       let description = '';
+      let icon = '🏏';
       if (type.name === 'Player') {
-        description = 'Represents a cricket player with team affiliation and personal details.';
+        description = 'Represents a cricket player with team affiliation, personal details, and location information.';
+        icon = '👤';
       } else {
         description = `The ${type.name} type definition.`;
       }
       
-      markdown += `${description}\n\n`;
+      markdown += `${icon} **Description:** ${description}\n\n`;
       
       if (type.fields.length > 0) {
-        markdown += `#### Fields for \`${type.name}\`\n\n`;
-        markdown += `| Name | Type | Description |\n`;
-        markdown += `|------|------|-------------|\n`;
+        markdown += `#### 📋 Fields for \`${type.name}\`\n\n`;
+        markdown += `| Field | Type | Description | Required |\n`;
+        markdown += `|-------|------|-------------|----------|\n`;
         
         type.fields.forEach(field => {
           let fieldDescription = '';
+          let required = field.type.includes('!') ? '✅ Yes' : '❌ No';
+          let fieldIcon = '📝';
+          
           if (field.name === 'id') {
             fieldDescription = 'Unique identifier for the player';
+            fieldIcon = '🆔';
           } else if (field.name === 'name') {
             fieldDescription = 'Player\'s full name';
+            fieldIcon = '👤';
           } else if (field.name === 'team') {
-            fieldDescription = 'Team the player belongs to';
+            fieldDescription = 'IPL team the player belongs to';
+            fieldIcon = '🏟️';
+          } else if (field.name === 'city') {
+            fieldDescription = 'Player\'s home city';
+            fieldIcon = '🏙️';
           } else if (field.name === 'jerseyNumber') {
             fieldDescription = 'Player\'s jersey number';
+            fieldIcon = '🔢';
           } else {
             fieldDescription = `${field.name} field`;
           }
           
-          markdown += `| \`${field.name}\` | \`${field.type}\` | ${fieldDescription} |\n`;
+          markdown += `| ${fieldIcon} \`${field.name}\` | \`${field.type}\` | ${fieldDescription} | ${required} |\n`;
         });
         markdown += `\n`;
       }
@@ -188,48 +245,143 @@ ${schemaContent}
 
   // Generate Enums section
   if (enums.length > 0) {
-    markdown += `## Enums\n\n`;
+    markdown += `## 📝 Enums\n\n`;
     enums.forEach(enumType => {
-      markdown += `### ${enumType.name}\n\n`;
+      markdown += `### 🏟️ ${enumType.name}\n\n`;
       
       // Add description based on enum name
       let description = '';
       if (enumType.name === 'Team') {
-        description = 'Cricket teams participating in IPL (Indian Premier League).';
+        description = 'Cricket teams participating in IPL (Indian Premier League) with their respective cities and colors.';
       } else {
         description = `The ${enumType.name} enum values.`;
       }
       
-      markdown += `${description}\n\n`;
-      markdown += `#### Values for \`${enumType.name}\`\n\n`;
-      markdown += `| Value | Description |\n`;
-      markdown += `|-------|-------------|\n`;
+      markdown += `🏏 **Description:** ${description}\n\n`;
+      markdown += `#### 🎯 Values for \`${enumType.name}\`\n\n`;
+      markdown += `| Value | Full Name | City | Colors |\n`;
+      markdown += `|-------|-----------|------|--------|\n`;
       
       enumType.values.forEach(value => {
-        let valueDescription = '';
+        let fullName = '';
+        let city = '';
+        let colors = '';
+        
         if (value === 'CSK') {
-          valueDescription = 'Chennai Super Kings';
+          fullName = 'Chennai Super Kings';
+          city = 'Chennai';
+          colors = '🟡 Yellow & 🔵 Blue';
         } else if (value === 'MI') {
-          valueDescription = 'Mumbai Indians';
+          fullName = 'Mumbai Indians';
+          city = 'Mumbai';
+          colors = '🔵 Blue & 🟡 Gold';
         } else if (value === 'RCB') {
-          valueDescription = 'Royal Challengers Bangalore';
+          fullName = 'Royal Challengers Bangalore';
+          city = 'Bangalore';
+          colors = '🔴 Red & 🟡 Gold';
         } else if (value === 'DC') {
-          valueDescription = 'Delhi Capitals';
+          fullName = 'Delhi Capitals';
+          city = 'Delhi';
+          colors = '🔵 Blue & 🔴 Red';
         } else if (value === 'GT') {
-          valueDescription = 'Gujarat Titans';
+          fullName = 'Gujarat Titans';
+          city = 'Ahmedabad';
+          colors = '🟢 Green & 🔵 Blue';
+        } else if (value === 'GST') {
+          fullName = 'Gujarat Titans';
+          city = 'Ahmedabad';
+          colors = '🟢 Green & 🔵 Blue';
         } else {
-          valueDescription = `${value} team`;
+          fullName = `${value} team`;
+          city = 'Unknown';
+          colors = 'Unknown';
         }
         
-        markdown += `| \`${value}\` | ${valueDescription} |\n`;
+        markdown += `| \`${value}\` | ${fullName} | ${city} | ${colors} |\n`;
       });
       markdown += `\n`;
     });
   }
 
-  markdown += `## Help and support
+  markdown += `## 💡 Examples
 
-### How to Update Documentation
+### Basic Queries
+
+\`\`\`graphql
+# Get all players with basic info
+query GetAllPlayers {
+  findAll {
+    id
+    name
+    team
+  }
+}
+
+# Get all players with complete details
+query GetAllPlayersDetailed {
+  findAll {
+    id
+    name
+    team
+    city
+  }
+}
+
+# Find a specific player by ID
+query GetPlayerById {
+  findById(id: 1) {
+    id
+    name
+    team
+    city
+  }
+}
+\`\`\`
+
+### Advanced Queries
+
+\`\`\`graphql
+# Get players from specific teams
+query GetCSKPlayers {
+  findAll {
+    id
+    name
+    team
+    city
+  }
+}
+
+# Get player details for team analysis
+query GetTeamAnalysis {
+  findAll {
+    name
+    team
+    city
+  }
+}
+\`\`\`
+
+## 🛠️ Development
+
+### 📁 Project Structure
+
+\`\`\`
+src/
+├── main/
+│   ├── java/com/graphQl/document1/
+│   │   ├── controller/PlayerController.java
+│   │   ├── model/Player.java
+│   │   ├── service/PlayerService.java
+│   │   └── Document1Application.java
+│   └── resources/
+│       ├── graphql/schema.graphqls
+│       └── application.properties
+docs/
+└── graphql/
+    └── schemaDocument.md
+\`\`\`
+
+### 🔄 How to Update Documentation
 
 To update this documentation when you make changes to your GraphQL schema:
 
@@ -239,31 +391,40 @@ node generate-docs.js
 
 This will automatically parse your schema and regenerate this documentation.
 
-### Schema File Location
+### 📍 Schema File Location
 
 The documentation is generated from: \`src/main/resources/graphql/schema.graphqls\`
 
-### Example Usage
+### 🚀 Running the Application
 
-\`\`\`graphql
-# Get all players
-query GetAllPlayers {
-  findAll {
-    id
-    name
-    team
-  }
-}
+\`\`\`bash
+# Start the Spring Boot application
+./gradlew bootRun
 
-# Get players from specific team
-query GetPlayersByTeam {
-  findAll {
-    id
-    name
-    team
-  }
-}
+# The GraphQL endpoint will be available at:
+# http://localhost:8080/graphql
 \`\`\`
+
+### 🧪 Testing Queries
+
+You can test the API using:
+
+1. **GraphQL Playground** (if enabled)
+2. **Postman** with GraphQL support
+3. **curl** commands
+4. **GraphQL clients** like Apollo Client
+
+---
+
+<div align="center">
+
+**🏏 Cricket Players GraphQL API**  
+*Built with ❤️ using Spring Boot & GraphQL*
+
+[![Made with GraphQL](https://img.shields.io/badge/Made%20with-GraphQL-E10098?style=for-the-badge&logo=graphql&logoColor=white)](https://graphql.org/)
+[![Powered by Spring Boot](https://img.shields.io/badge/Powered%20by-Spring%20Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)](https://spring.io/projects/spring-boot)
+
+</div>
 `;
 
   return markdown;
@@ -288,10 +449,10 @@ try {
   const markdown = generateMarkdown(schemaData, schemaContent);
   
   // Write the documentation
-  fs.writeFileSync(path.join(docsDir, 'README.md'), markdown);
+  fs.writeFileSync(path.join(docsDir, 'schemaDocument.md'), markdown);
   
   console.log('✅ Dynamic documentation generated successfully!');
-  console.log('📁 Location: docs/graphql/README.md');
+  console.log('📁 Location: docs/graphql/schemaDocument.md');
   console.log('🔄 To update: node generate-docs.js');
   console.log(`📊 Found: ${schemaData.types.length} types, ${schemaData.enums.length} enums, ${schemaData.queries.length} queries`);
   
