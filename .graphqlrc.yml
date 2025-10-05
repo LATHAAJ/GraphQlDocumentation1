@@ -5,4 +5,4 @@ extensions:
     baseURL: .
     linkRoot: /docs
     loaders:
-      GraphQLFileLoader: 'src/main/resources/graphql/**/*.graphqls'
+      GraphQLFileLoader: 'src/main/resources/graphql/**/*.graphql'

@@ -4,7 +4,7 @@
 [![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)](https://spring.io/projects/spring-boot)
 [![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://openjdk.org/)
 
-> 📅 **Last Updated:** 10/5/2025, 6:12:05 PM  
+> 📅 **Last Updated:** 10/5/2025, 6:18:16 PM  
 > 🔄 **Auto-generated** from GraphQL schema  
 > ⚡ **Dynamic** - Updates automatically with schema changes
 
@@ -46,13 +46,7 @@ Every GraphQL schema has a root type for both queries and mutations. The query t
 ## 🔍 Schema Overview
 
 ```graphql
-type Player{
-    id: ID!
-    name : String
-    team: Team
-    city: String
-}
-enum Team{
+enum Team {
     CSK
     MI
     RCB
@@ -60,15 +54,23 @@ enum Team{
     GT
 }
 
-type Query{
+type Player {
+    id: ID!
+    name: String
+    team: Team
+    city: String
+}
+
+type Query {
     findAll: [Player]
     findById(id: ID!): Player
     findByTeam(team: Team!): [Player]
 }
 
-type Mutation{
+type Mutation {
     createPlayer(name: String!, team: Team!, city: String!): Player
 }
+
 ```
 
 ## 📊 Queries
