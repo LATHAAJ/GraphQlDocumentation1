@@ -1,6 +1,6 @@
 # GraphQL API Documentation
 
-> **Auto-generated on:** 10/5/2025, 4:51:27 PM
+> **Auto-generated on:** 10/5/2025, 5:04:56 PM
 > 
 > This documentation is automatically generated from your GraphQL schema. 
 > Any changes to the schema will be reflected here when you run `node generate-docs.js`
@@ -24,6 +24,7 @@ type Player{
     id: ID!
     name : String
     team: Team
+    city:String
 }
 enum Team{
     CSK
@@ -31,10 +32,12 @@ enum Team{
     RCB
     DC
     GT
+    GST
 }
 
 type Query{
     findAll: [Player]
+    findById(id: ID!): Player
 }
 ```
 
@@ -53,9 +56,16 @@ query {
     id
     name
     team
+    city
   }
 }
 ```
+
+### findById(id
+
+Execute the findById(id operation.
+
+**Type:** ID!)
 
 ## Types
 
@@ -70,6 +80,7 @@ Represents a cricket player with team affiliation and personal details.
 | `id` | `ID!` | Unique identifier for the player |
 | `name` | `String` | Player's full name |
 | `team` | `Team` | Team the player belongs to |
+| `city` | `String` | city field |
 
 ## Enums
 
@@ -86,6 +97,7 @@ Cricket teams participating in IPL (Indian Premier League).
 | `RCB` | Royal Challengers Bangalore |
 | `DC` | Delhi Capitals |
 | `GT` | Gujarat Titans |
+| `GST` | GST team |
 
 ## Help and support
 
