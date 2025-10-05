@@ -2,7 +2,6 @@ package com.graphQl.document1.controller;
 
 import com.graphQl.document1.model.Player;
 import com.graphQl.document1.model.Team;
-import com.graphQl.document1.model.Position;
 import com.graphQl.document1.service.PlayerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -33,13 +32,8 @@ public class PlayerController {
     return playerService.findByTeam(team);
   }
 
-  @QueryMapping
-  public List<Player> findByPosition(@Argument Position position) {
-    return playerService.findByPosition(position);
-  }
-
   @MutationMapping
-  public Player createPlayer(@Argument String name, @Argument Team team, @Argument String city, @Argument Position position) {
-    return playerService.createPlayer(name, team, city, position);
+  public Player createPlayer(@Argument String name, @Argument Team team, @Argument String city) {
+    return playerService.createPlayer(name, team, city);
   }
 }
