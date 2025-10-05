@@ -2,6 +2,7 @@ package com.graphQl.document1.service;
 
 import com.graphQl.document1.model.Player;
 import com.graphQl.document1.model.Team;
+import com.graphQl.document1.model.Position;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -31,8 +32,14 @@ public List<Player> findAll() {
             .collect(Collectors.toList());
   }
 
-  public Player createPlayer(String name, Team team, String city) {
-    Player player = new Player(id.incrementAndGet(), name, team, city);
+  public List<Player> findByPosition(Position position) {
+    return playerList.stream()
+            .filter(player -> player.position() == position)
+            .collect(Collectors.toList());
+  }
+
+  public Player createPlayer(String name, Team team, String city, Position position) {
+    Player player = new Player(id.incrementAndGet(), name, team, city, position);
     playerList.add(player);
     return player;
   }
@@ -46,11 +53,12 @@ public List<Player> findAll() {
 
   @PostConstruct
   private void init() {
-    // Initialize players with enhanced data including cities
-    playerList.add(new Player(id.incrementAndGet(), "MS Dhoni", Team.CSK, "Chennai"));
-    playerList.add(new Player(id.incrementAndGet(), "Rohit Sharma", Team.MI, "Mumbai"));
-    playerList.add(new Player(id.incrementAndGet(), "Jaspreet Bumrah", Team.MI, "Mumbai"));
-    playerList.add(new Player(id.incrementAndGet(), "Rishabh Pant", Team.DC, "Delhi"));
-    playerList.add(new Player(id.incrementAndGet(), "Suresh Raina", Team.CSK, "Chennai"));
+    // Initialize players with enhanced data including cities and positions
+    playerList.add(new Player(id.incrementAndGet(), "MS Dhoni", Team.CSK, "Chennai", Position.WICKET_KEEPER));
+    playerList.add(new Player(id.incrementAndGet(), "Rohit Sharma", Team.MI, "Mumbai", Position.BATSMAN));
+    playerList.add(new Player(id.incrementAndGet(), "Jaspreet Bumrah", Team.MI, "Mumbai", Position.BOWLER));
+    playerList.add(new Player(id.incrementAndGet(), "Rishabh Pant", Team.DC, "Delhi", Position.WICKET_KEEPER));
+    playerList.add(new Player(id.incrementAndGet(), "Suresh Raina", Team.CSK, "Chennai", Position.ALL_ROUNDER));
+    playerList.add(new Player(id.incrementAndGet(), "Virat Kohli", Team.RCB, "Bangalore", Position.CAPTAIN));
   }
   }

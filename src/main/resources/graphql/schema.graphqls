@@ -1,8 +1,9 @@
 type Player{
     id: ID!
-    name : String
+    name: String
     team: Team
     city: String
+    position: Position
 }
 enum Team{
     CSK
@@ -12,12 +13,21 @@ enum Team{
     GT
 }
 
+enum Position{
+    BATSMAN
+    BOWLER
+    WICKET_KEEPER
+    ALL_ROUNDER
+    CAPTAIN
+}
+
 type Query{
     findAll: [Player]
     findById(id: ID!): Player
     findByTeam(team: Team!): [Player]
+    findByPosition(position: Position!): [Player]
 }
 
 type Mutation{
-    createPlayer(name: String!, team: Team!, city: String!): Player
+    createPlayer(name: String!, team: Team!, city: String!, position: Position!): Player
 }
