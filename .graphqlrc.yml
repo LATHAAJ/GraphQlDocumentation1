@@ -1,0 +1,8 @@
+schema: src/main/resources/graphql/schema.graphql
+documents: null
+extensions:
+  graphql-markdown:
+    baseURL: .
+    linkRoot: /docs
+    loaders:
+      GraphQLFileLoader: 'src/main/resources/graphql/**/*.graphqls'
