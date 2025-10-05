@@ -4,7 +4,7 @@
 [![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)](https://spring.io/projects/spring-boot)
 [![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://openjdk.org/)
 
-> 📅 **Last Updated:** 10/5/2025, 5:41:33 PM  
+> 📅 **Last Updated:** 10/5/2025, 6:04:23 PM  
 > 🔄 **Auto-generated** from GraphQL schema  
 > ⚡ **Dynamic** - Updates automatically with schema changes
 
@@ -48,9 +48,14 @@ Every GraphQL schema has a root type for both queries and mutations. The query t
 ```graphql
 type Player{
     id: ID!
-    name : String
+    name: String
     team: Team
     city: String
+    age: Int
+    position: String
+    jerseyNumber: Int
+    salary: Float
+    isActive: Boolean
 }
 enum Team{
     CSK
@@ -58,16 +63,34 @@ enum Team{
     RCB
     DC
     GT
+    KKR
+    PBKS
+    RR
+    SRH
+    LSG
 }
 
 type Query{
     findAll: [Player]
     findById(id: ID!): Player
     findByTeam(team: Team!): [Player]
+    findByName(name: String!): Player
+    findByPosition(position: String!): [Player]
+    findActivePlayers: [Player]
+    findPlayersByAgeRange(minAge: Int!, maxAge: Int!): [Player]
+    findPlayersBySalaryRange(minSalary: Float!, maxSalary: Float!): [Player]
+    getPlayerCount: Int
+    getTeamPlayerCount(team: Team!): Int
 }
 
 type Mutation{
-    createPlayer(name: String!, team: Team!, city: String!): Player
+    createPlayer(name: String!, team: Team!, city: String!, age: Int, position: String, jerseyNumber: Int, salary: Float): Player
+    updatePlayer(id: ID!, name: String, team: Team, city: String, age: Int, position: String, jerseyNumber: Int, salary: Float, isActive: Boolean): Player
+    deletePlayer(id: ID!): Boolean
+    transferPlayer(id: ID!, newTeam: Team!): Player
+    activatePlayer(id: ID!): Player
+    deactivatePlayer(id: ID!): Player
+    updatePlayerSalary(id: ID!, newSalary: Float!): Player
 }
 ```
 
@@ -87,6 +110,11 @@ query GetAllPlayers {
     name
     team
     city
+    age
+    position
+    jerseyNumber
+    salary
+    isActive
   }
 }
 ```
@@ -100,6 +128,48 @@ query GetAllPlayers {
 ### 🔍 findByTeam(team
 
 🔍 **Description:** Execute the findByTeam(team operation.
+
+**Return Type:** `Team!)`
+
+### 🔍 findByName(name
+
+🔍 **Description:** Execute the findByName(name operation.
+
+**Return Type:** `String!)`
+
+### 🔍 findByPosition(position
+
+🔍 **Description:** Execute the findByPosition(position operation.
+
+**Return Type:** `String!)`
+
+### 🔍 findActivePlayers
+
+🔍 **Description:** Execute the findActivePlayers operation.
+
+**Return Type:** `[Player]`
+
+### 🔍 findPlayersByAgeRange(minAge
+
+🔍 **Description:** Execute the findPlayersByAgeRange(minAge operation.
+
+**Return Type:** `Int! maxAge`
+
+### 🔍 findPlayersBySalaryRange(minSalary
+
+🔍 **Description:** Execute the findPlayersBySalaryRange(minSalary operation.
+
+**Return Type:** `Float! maxSalary`
+
+### 🔍 getPlayerCount
+
+🔍 **Description:** Execute the getPlayerCount operation.
+
+**Return Type:** `Int`
+
+### 🔍 getTeamPlayerCount(team
+
+🔍 **Description:** Execute the getTeamPlayerCount(team operation.
 
 **Return Type:** `Team!)`
 
@@ -117,6 +187,11 @@ query GetAllPlayers {
 | 👤 `name` | `String` | Player's full name | ❌ No |
 | 🏟️ `team` | `Team` | IPL team the player belongs to | ❌ No |
 | 🏙️ `city` | `String` | Player's home city | ❌ No |
+| 📝 `age` | `Int` | age field | ❌ No |
+| 📝 `position` | `String` | position field | ❌ No |
+| 🔢 `jerseyNumber` | `Int` | Player's jersey number | ❌ No |
+| 📝 `salary` | `Float` | salary field | ❌ No |
+| 📝 `isActive` | `Boolean` | isActive field | ❌ No |
 
 ### 🏏 Mutation
 
@@ -127,6 +202,12 @@ query GetAllPlayers {
 | Field | Type | Description | Required |
 |-------|------|-------------|----------|
 | 📝 `createPlayer(name` | `String! team` | createPlayer(name field | ✅ Yes |
+| 📝 `updatePlayer(id` | `ID! name` | updatePlayer(id field | ✅ Yes |
+| 📝 `deletePlayer(id` | `ID!)` | deletePlayer(id field | ✅ Yes |
+| 📝 `transferPlayer(id` | `ID! newTeam` | transferPlayer(id field | ✅ Yes |
+| 📝 `activatePlayer(id` | `ID!)` | activatePlayer(id field | ✅ Yes |
+| 📝 `deactivatePlayer(id` | `ID!)` | deactivatePlayer(id field | ✅ Yes |
+| 📝 `updatePlayerSalary(id` | `ID! newSalary` | updatePlayerSalary(id field | ✅ Yes |
 
 ## 📝 Enums
 
@@ -143,6 +224,11 @@ query GetAllPlayers {
 | `RCB` | Royal Challengers Bangalore | Bangalore | 🔴 Red & 🟡 Gold |
 | `DC` | Delhi Capitals | Delhi | 🔵 Blue & 🔴 Red |
 | `GT` | Gujarat Titans | Ahmedabad | 🟢 Green & 🔵 Blue |
+| `KKR` | KKR team | Unknown | Unknown |
+| `PBKS` | PBKS team | Unknown | Unknown |
+| `RR` | RR team | Unknown | Unknown |
+| `SRH` | SRH team | Unknown | Unknown |
+| `LSG` | LSG team | Unknown | Unknown |
 
 ## 💡 Examples
 
