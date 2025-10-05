@@ -1,5 +1,10 @@
 # GraphQL API Documentation
 
+> **Auto-generated on:** 10/5/2025, 4:39:29 PM
+> 
+> This documentation is automatically generated from your GraphQL schema. 
+> Any changes to the schema will be reflected here when you run `node generate-docs.js`
+
 ## Schema Overview
 
 ```graphql
@@ -24,25 +29,29 @@ type Query{
 ## Types
 
 ### Player
-A cricket player with the following fields:
-- **id**: ID! - Unique identifier
-- **name**: String - Player's name
-- **team**: Team - Team the player belongs to
+**Fields:**
+- **id**: ID!
+- **name**: String
+- **team**: Team
 
-### Team (Enum)
-Available teams:
-- CSK
-- MI
-- RCB
-- DC
-- GT
+### Query
+**Fields:**
+- **findAll**: [Player]
+
+## Enums
+
+### Team
+**Values:**
+- `CSK`
+- `MI`
+- `RCB`
+- `DC`
+- `GT`
 
 ## Queries
 
 ### findAll
-Returns all players from all teams.
-
-**Type**: [Player]
+**Type**: `[Player]`
 
 **Example Query:**
 ```graphql
@@ -54,3 +63,17 @@ query {
   }
 }
 ```
+
+## How to Update Documentation
+
+To update this documentation when you make changes to your GraphQL schema:
+
+```bash
+node generate-docs.js
+```
+
+This will automatically parse your schema and regenerate this documentation.
+
+## Schema File Location
+
+The documentation is generated from: `src/main/resources/graphql/schema.graphqls`

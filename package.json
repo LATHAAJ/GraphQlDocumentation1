@@ -1,0 +1,16 @@
+{
+  "name": "graphql-documentation-generator",
+  "version": "1.0.0",
+  "description": "Dynamic GraphQL API documentation generator",
+  "main": "generate-docs.js",
+  "scripts": {
+    "generate-docs": "node generate-docs.js",
+    "watch-schema": "nodemon --watch src/main/resources/graphql/schema.graphqls --exec 'node generate-docs.js'"
+  },
+  "keywords": ["graphql", "documentation", "markdown", "api"],
+  "author": "Your Team",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  }
+}
