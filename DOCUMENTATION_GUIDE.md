@@ -18,7 +18,8 @@ A **fully dynamic** GraphQL documentation generator that automatically updates w
    - Watch mode for automatic updates
    - Development dependencies
 
-3. **`docs/graphql/README.md`** - Auto-generated documentation
+3. **`docs/graphql/schemaDocument.md`** - Enhanced professional documentation
+4. **`docs/graphql/README.md`** - Redirect page pointing to main documentation
 
 ## 🔧 Commands Used
 
@@ -37,10 +38,10 @@ npm run watch-schema
 ### Git Commands:
 ```bash
 # Add files
-git add docs/graphql/README.md generate-docs.js package.json
+git add docs/graphql/schemaDocument.md generate-docs.js package.json
 
 # Commit
-git commit -m "Add dynamic GraphQL documentation generator"
+git commit -m "Add enhanced GraphQL documentation with professional styling"
 
 # Push
 git push origin documentationBranch
@@ -54,10 +55,12 @@ git push origin documentationBranch
 - No manual configuration needed
 
 ### **Smart Documentation Generation:**
-- **Types Section**: Lists all types with their fields
-- **Enums Section**: Shows all enum values
-- **Queries Section**: Documents all queries with examples
-- **Auto-generated Examples**: Creates GraphQL query examples
+- **Professional Styling**: GitHub-style formatting with badges and emojis
+- **Types Section**: Lists all types with detailed field descriptions
+- **Enums Section**: Shows all enum values with team information
+- **Queries Section**: Documents all queries with multiple examples
+- **Enhanced Tables**: Color-coded tables with required field indicators
+- **Auto-generated Examples**: Creates comprehensive GraphQL query examples
 - **Timestamp**: Shows when documentation was last generated
 
 ### **Easy Updates:**
@@ -83,11 +86,14 @@ git push origin documentationBranch
 ## 📊 Example Output
 
 The generated documentation includes:
-- Schema overview with syntax highlighting
-- Dynamic type listings
-- Auto-generated query examples
-- Update instructions
-- Generation timestamp
+- **Professional header** with technology badges
+- **Table of contents** with anchor links
+- **Schema overview** with syntax highlighting
+- **Enhanced type listings** with field icons and descriptions
+- **Rich enum information** with team details and colors
+- **Multiple query examples** (basic and advanced)
+- **Development guidelines** and project structure
+- **Professional footer** with branding
 
 ## 🎉 Benefits
 
@@ -96,5 +102,16 @@ The generated documentation includes:
 - **GitHub Ready**: Renders beautifully on GitHub
 - **Professional**: Suitable for API documentation
 - **Scalable**: Works with any GraphQL schema size
+- **Enhanced Styling**: Professional badges, emojis, and formatting
+- **Rich Information**: Detailed team data, field descriptions, and examples
+- **Easy Navigation**: Table of contents and redirect system
 
-This approach ensures your documentation is always up-to-date and requires minimal effort to maintain!
+## 📁 File Structure
+
+```
+docs/graphql/
+├── schemaDocument.md  ← Main enhanced documentation
+└── README.md          ← Redirect page to main docs
+```
+
+This approach ensures your documentation is always up-to-date, professionally styled, and requires minimal effort to maintain!
