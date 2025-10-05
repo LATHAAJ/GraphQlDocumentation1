@@ -4,7 +4,7 @@
 [![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)](https://spring.io/projects/spring-boot)
 [![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://openjdk.org/)
 
-> 📅 **Last Updated:** 10/5/2025, 5:27:35 PM  
+> 📅 **Last Updated:** 10/5/2025, 5:41:33 PM  
 > 🔄 **Auto-generated** from GraphQL schema  
 > ⚡ **Dynamic** - Updates automatically with schema changes
 
@@ -65,6 +65,10 @@ type Query{
     findById(id: ID!): Player
     findByTeam(team: Team!): [Player]
 }
+
+type Mutation{
+    createPlayer(name: String!, team: Team!, city: String!): Player
+}
 ```
 
 ## 📊 Queries
@@ -113,6 +117,16 @@ query GetAllPlayers {
 | 👤 `name` | `String` | Player's full name | ❌ No |
 | 🏟️ `team` | `Team` | IPL team the player belongs to | ❌ No |
 | 🏙️ `city` | `String` | Player's home city | ❌ No |
+
+### 🏏 Mutation
+
+🏏 **Description:** The Mutation type definition.
+
+#### 📋 Fields for `Mutation`
+
+| Field | Type | Description | Required |
+|-------|------|-------------|----------|
+| 📝 `createPlayer(name` | `String! team` | createPlayer(name field | ✅ Yes |
 
 ## 📝 Enums
 
