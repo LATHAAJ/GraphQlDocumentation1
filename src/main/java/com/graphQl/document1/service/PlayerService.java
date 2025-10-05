@@ -20,9 +20,9 @@ public List<Player> findAll() {
   return playerList;
 }
 
-  public Optional<Player> findOne(Integer id) {
+  public Optional<Player> findById(Integer id) {
     return playerList.stream()
-            .filter(player -> player.id() == id).findFirst();
+            .filter(player -> player.id().equals(id)).findFirst();
   }
 
   public List<Player> findPlayersByTeam(Team team) {
@@ -31,8 +31,8 @@ public List<Player> findAll() {
             .collect(Collectors.toList());
   }
 
-  public Player createPlayer(String name, Team team) {
-    Player player = new Player(id.incrementAndGet(), name, team);
+  public Player createPlayer(String name, Team team, String city) {
+    Player player = new Player(id.incrementAndGet(), name, team, city);
     playerList.add(player);
     return player;
   }
@@ -46,11 +46,11 @@ public List<Player> findAll() {
 
   @PostConstruct
   private void init() {
-    // Initialize players with enhanced data
-    playerList.add(new Player(id.incrementAndGet(), "MS Dhoni", Team.CSK));
-    playerList.add(new Player(id.incrementAndGet(), "Rohit Sharma", Team.MI));
-    playerList.add(new Player(id.incrementAndGet(), "Jaspreet Bumrah", Team.MI));
-    playerList.add(new Player(id.incrementAndGet(), "Rishabh Pant", Team.DC));
-    playerList.add(new Player(id.incrementAndGet(), "Suresh Raina", Team.CSK));
+    // Initialize players with enhanced data including cities
+    playerList.add(new Player(id.incrementAndGet(), "MS Dhoni", Team.CSK, "Chennai"));
+    playerList.add(new Player(id.incrementAndGet(), "Rohit Sharma", Team.MI, "Mumbai"));
+    playerList.add(new Player(id.incrementAndGet(), "Jaspreet Bumrah", Team.MI, "Mumbai"));
+    playerList.add(new Player(id.incrementAndGet(), "Rishabh Pant", Team.DC, "Delhi"));
+    playerList.add(new Player(id.incrementAndGet(), "Suresh Raina", Team.CSK, "Chennai"));
   }
   }

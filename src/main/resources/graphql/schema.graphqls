@@ -2,6 +2,7 @@ type Player{
     id: ID!
     name : String
     team: Team
+    city:String
 }
 enum Team{
     CSK
@@ -9,8 +10,10 @@ enum Team{
     RCB
     DC
     GT
+    GST
 }
 
 type Query{
     findAll: [Player]
+    findById(id: ID!): Player
 }
