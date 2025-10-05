@@ -25,7 +25,7 @@ public List<Player> findAll() {
             .filter(player -> player.id().equals(id)).findFirst();
   }
 
-  public List<Player> findPlayersByTeam(Team team) {
+  public List<Player> findByTeam(Team team) {
     return playerList.stream()
             .filter(player -> player.team() == team)
             .collect(Collectors.toList());

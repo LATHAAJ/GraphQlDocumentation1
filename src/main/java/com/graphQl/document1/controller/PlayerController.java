@@ -1,6 +1,7 @@
 package com.graphQl.document1.controller;
 
 import com.graphQl.document1.model.Player;
+import com.graphQl.document1.model.Team;
 import com.graphQl.document1.service.PlayerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -23,5 +24,10 @@ public class PlayerController {
   @QueryMapping
   public Optional<Player> findById(@Argument Integer id) {
     return playerService.findById(id);
+  }
+
+  @QueryMapping
+  public List<Player> findByTeam(@Argument Team team) {
+    return playerService.findByTeam(team);
   }
 }
