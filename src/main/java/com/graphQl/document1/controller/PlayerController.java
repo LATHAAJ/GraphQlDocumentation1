@@ -5,6 +5,7 @@ import com.graphQl.document1.model.Team;
 import com.graphQl.document1.service.PlayerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
@@ -29,5 +30,10 @@ public class PlayerController {
   @QueryMapping
   public List<Player> findByTeam(@Argument Team team) {
     return playerService.findByTeam(team);
+  }
+
+  @MutationMapping
+  public Player createPlayer(@Argument String name, @Argument Team team, @Argument String city) {
+    return playerService.createPlayer(name, team, city);
   }
 }

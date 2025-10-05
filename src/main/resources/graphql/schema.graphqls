@@ -17,3 +17,7 @@ type Query{
     findById(id: ID!): Player
     findByTeam(team: Team!): [Player]
 }
+
+type Mutation{
+    createPlayer(name: String!, team: Team!, city: String!): Player
+}
