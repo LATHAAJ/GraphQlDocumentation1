@@ -433,7 +433,7 @@ You can test the API using:
 // Main execution
 try {
   // Read the schema file
-  const schemaPath = 'src/main/resources/graphql/schema.graphql';
+  const schemaPath = 'src/main/resources/graphql/schema.graphqls';
   const schemaContent = fs.readFileSync(schemaPath, 'utf8');
   
   // Parse the schema
